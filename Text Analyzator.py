@@ -65,7 +65,8 @@ text = TEXTS[int(choice) - 1].split()
 words = []
 titlecase, uppercase, lowercase, numeric = [], [], [], []
 for word in text:
-    words.append(word.strip(".,"))
+    words.append(word.strip("!\"#$%&'()*+, -./:;<=>?@[\]^_`{|}~"))
+words = list(filter(None, words))
 
 for word in words:
     if word.istitle():
