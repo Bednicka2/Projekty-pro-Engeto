@@ -1,5 +1,5 @@
-TEXTS = ['''
-Situated about 10 miles west of Kemmerer, 
+TEXTS = [
+'''Situated about 10 miles west of Kemmerer, 
 Fossil Butte is a ruggedly impressive 
 topographic feature that rises sharply 
 some 1000 feet above Twin Creek Valley 
@@ -50,7 +50,7 @@ else:
 # Výběr textu na analýzu
 choice = input("Enter a number btw. 1 and 3 to select: ")
 if choice.isnumeric():
-    if choice in ["1", "2", "3"]:
+    if choice in range(len(TEXTS)+1):
         print(separator)
     else:
         print("Input is out of range!")
@@ -65,7 +65,7 @@ text = TEXTS[int(choice) - 1].split()
 words = []
 titlecase, uppercase, lowercase, numeric = [], [], [], []
 for word in text:
-    words.append(word.strip("!\"#$%&'()*+, -./:;<=>?@[\]^_`{|}~"))
+    words.append(word.strip("!\"#$%&'()*+, -./:;<=>?@[\\]^_`{|}~"))
 words = list(filter(None, words))
 
 for word in words:
