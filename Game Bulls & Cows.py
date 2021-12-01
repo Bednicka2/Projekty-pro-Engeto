@@ -3,7 +3,6 @@ import time
 
 separator = "-" * 60
 
-
 # Kontrola duplicity
 def dupl_check(x):
     my_set = set()
@@ -14,6 +13,13 @@ def dupl_check(x):
     else:
         return True
 
+# # Generování náhodného čísla
+def unique_answer(answer):
+    while True:
+        if dupl_check(answer) == False:
+            answer = (str(random.randrange(1000, 9999)))
+        else:
+            return answer
 
 # Kontrola složení
 def num_check(x):
@@ -47,12 +53,12 @@ def tip_check(tip):
 def compare(tip, answer):
     index, bulls, cows = 0, 0, 0
     for num in tip:
-        if num in answer:
+        if num == answer[index]:
+            bulls += 1
+            index += 1
+        elif num in answer:
             cows += 1
-            if tip[index] == answer[index]:
-                bulls += 1
-                cows -= 1
-                index += 1
+            index += 1
         else:
             index += 1
     return bulls, cows
@@ -64,8 +70,10 @@ def result(bulls, cows):
     cows = compare(tip, answer)[1]
     if bulls < 2 and cows < 2:
         print(f"{bulls} bull, {cows} cow")
-    elif bulls < 2:
+    elif bulls < 2 and cows >= 2:
         print(f"{bulls} bull, {cows} cows")
+    elif bulls >= 2 and cows < 2:
+        print(f"{bulls} bulls, {cows} cow")
     else:
         print(f"{bulls} bulls, {cows} cows")
 
@@ -75,36 +83,34 @@ print(f"""Hi there!
 {separator}
 I've generated a random 4 digit number for you.
 Let's play a bulls & cows game!
+
+If you need to see the right answer, write SHOW.
 {separator}""")
 
 
-# Generování náhodného čísla
-while True:
-    answer = (str(random.randrange(1000, 9999)))
-    while True:
-        if dupl_check(answer) == False:
-            answer = (str(random.randrange(1000, 9999)))
-        else:
-            break
-
-
 # Hádání
+while True:
+    answer = unique_answer(str(random.randrange(1000, 9999)))
     guesses = 0
     start = time.time()
     while True:
-        tip = input("Enter a number: ")
-        tip = tip_check(tip)
-        compare(tip, answer)
-        result(compare(tip, answer)[0], compare(tip, answer)[1])
+        tip = input("Enter a number: ").upper()
+        if tip == "SHOW":
+            print(f"The answer is {answer}. You lost! :(")
+            break
+        else:
+            tip = tip_check(tip)
+            compare(tip, answer)
+            result(compare(tip, answer)[0], compare(tip, answer)[1])
         print(separator)
         guesses += 1
         if tip == answer:
             end = time.time()
-            print(f"""Correct! You have guessed the right number in {guesses} guesses! 
+            print(f"""Correct! You have guessed the right number in {guesses} guesses!
 It took you {round((end - start), 2)} seconds.
 """)
             break
-    restart = input("Would you like to play again? Write YES. To finish, press Enter. ")
+    restart = input("Would you like to play again? Write YES. To finish, press Enter. ").upper()
     if "YES" in restart:
         continue
     else:
