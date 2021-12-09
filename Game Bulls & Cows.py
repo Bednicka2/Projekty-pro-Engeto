@@ -3,6 +3,7 @@ import time
 
 separator = "-" * 60
 
+
 # Kontrola duplicity
 def dupl_check(x):
     my_set = set()
@@ -13,7 +14,8 @@ def dupl_check(x):
     else:
         return True
 
-# # Generování náhodného čísla
+
+# Generování náhodného čísla
 def unique_answer(answer):
     while True:
         if dupl_check(answer) == False:
@@ -89,31 +91,36 @@ If you need to see the right answer, write SHOW.
 
 
 # Hádání
-while True:
-    answer = unique_answer(str(random.randrange(1000, 9999)))
-    guesses = 0
-    start = time.time()
+def main():
+
     while True:
-        tip = input("Enter a number: ").upper()
-        if tip == "SHOW":
-            print(f"The answer is {answer}. You lost! :(")
-            break
+        answer = unique_answer(str(random.randrange(1000, 9999)))
+        guesses = 0
+        start = time.time()
+        while True:
+            tip = input("Enter a number: ").upper()
+            if tip == "SHOW":
+                print(f"The answer is {answer}. You lost! :(")
+                break
+            else:
+                tip = tip_check(tip)
+                compare(tip, answer)
+                result(compare(tip, answer)[0], compare(tip, answer)[1])
+            print(separator)
+            guesses += 1
+            if tip == answer:
+                end = time.time()
+                print(f"""Correct! You have guessed the right number in {guesses} guesses!
+    It took you {round((end - start), 2)} seconds.
+    """)
+                break
+        restart = input("Would you like to play again? Write YES. To finish, press Enter. ").upper()
+        if "YES" in restart:
+            continue
         else:
-            tip = tip_check(tip)
-            compare(tip, answer)
-            result(compare(tip, answer)[0], compare(tip, answer)[1])
-        print(separator)
-        guesses += 1
-        if tip == answer:
-            end = time.time()
-            print(f"""Correct! You have guessed the right number in {guesses} guesses!
-It took you {round((end - start), 2)} seconds.
-""")
+            print("Have a nice day! :)")
+            time.sleep(5)
             break
-    restart = input("Would you like to play again? Write YES. To finish, press Enter. ").upper()
-    if "YES" in restart:
-        continue
-    else:
-        print("Have a nice day! :)")
-        time.sleep(5)
-        break
+
+if __name__ == "__main__":
+    main()
