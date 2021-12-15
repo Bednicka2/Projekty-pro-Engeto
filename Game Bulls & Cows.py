@@ -53,30 +53,27 @@ def main():
 
   # Porovnání tipu se správnou odpovědí
   def compare(tip, answer):
-      index, bulls, cows = 0, 0, 0
-      for num in tip:
-          if num == answer[index]:
-              bulls += 1
-              index += 1
-          elif num in answer:
-              cows += 1
-              index += 1
-          else:
-              index += 1
-      return bulls, cows
-
-
-  # Vypsání výsledku porovnání
-  def result(bulls, cows):
-      if bulls < 2 and cows < 2:
-          print(f"{bulls} bull, {cows} cow")
-      elif bulls < 2 and cows >= 2:
-          print(f"{bulls} bull, {cows} cows")
-      elif bulls >= 2 and cows < 2:
-          print(f"{bulls} bulls, {cows} cow")
+    index, bulls, cows = 0, 0, 0
+    for num in tip:
+      if num == answer[index]:
+        bulls += 1
+        index += 1
+      elif num in answer:
+        cows += 1
+        index += 1
       else:
-          print(f"{bulls} bulls, {cows} cows")
-
+        index += 1
+    result(bulls,cows)
+        
+  def result(bulls, cows):
+     if bulls < 2 and cows < 2:
+       print(f"{bulls} bull, {cows} cow")
+     elif bulls < 2 and cows >= 2:
+       print(f"{bulls} bull, {cows} cows")
+     elif bulls >= 2 and cows < 2:
+       print(f"{bulls} bulls, {cows} cow")
+     else:
+       print(f"{bulls} bulls, {cows} cows")
 
   # Uvítání
   print(f"""Hi there!
@@ -100,9 +97,7 @@ def main():
         break
       else:
         tip = tip_check(tip)
-        bulls = (compare(tip, answer)[0])
-        cows = (compare(tip, answer)[1])
-        result(bulls, cows)
+        compare(tip, answer)
       print(separator)
       guesses += 1
       if tip == answer:
